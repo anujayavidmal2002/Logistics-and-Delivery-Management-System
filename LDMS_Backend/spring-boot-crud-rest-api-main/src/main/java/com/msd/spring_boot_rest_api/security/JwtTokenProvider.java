@@ -2,13 +2,11 @@ package com.msd.spring_boot_rest_api.security;
 
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
-
-import org.springframework.stereotype.Component;
 import com.msd.spring_boot_rest_api.model.Role;
-
-import java.util.Date;
+import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
+import java.util.Date;
 
 @Component
 public class JwtTokenProvider {
@@ -22,19 +20,22 @@ public class JwtTokenProvider {
 
         Date now = new Date();
         Date expiryDate = new Date(now.getTime() + JWT_EXPIRATION_MS);
+
         return Jwts.builder()
                 .setSubject(email)
                 .claim("role", role.name())
                 .setIssuedAt(now)
                 .setExpiration(expiryDate)
-                .signWith(JWT_SECRET) // <--- change here
+                .signWith(JWT_SECRET, SignatureAlgorithm.HS512) // updated usage
                 .compact();
-    }    
+    }
 
     // Get email from token
     public String getEmailFromJWT(String token) {
-        Claims claims = Jwts.parser()
+        Claims claims = Jwts
+                .parserBuilder() // updated usage
                 .setSigningKey(JWT_SECRET)
+                .build()
                 .parseClaimsJws(token)
                 .getBody();
 
@@ -43,8 +44,10 @@ public class JwtTokenProvider {
 
     // Get role from token
     public Role getRoleFromJWT(String token) {
-        Claims claims = Jwts.parser()
+        Claims claims = Jwts
+                .parserBuilder()
                 .setSigningKey(JWT_SECRET)
+                .build()
                 .parseClaimsJws(token)
                 .getBody();
 
@@ -55,11 +58,14 @@ public class JwtTokenProvider {
     // Validate token
     public boolean validateToken(String authToken) {
         try {
-            Jwts.parser().setSigningKey(JWT_SECRET).parseClaimsJws(authToken);
+            Jwts.parserBuilder()
+                    .setSigningKey(JWT_SECRET)
+                    .build()
+                    .parseClaimsJws(authToken);
             return true;
         } catch (JwtException | IllegalArgumentException e) {
-            // invalid token
+            System.out.println("JWT validation error: " + e.getMessage());
+            return false;
         }
-        return false;
     }
 }

@@ -1,6 +1,5 @@
 "use client"
 import { Package, Clock, AlertTriangle, Camera, DollarSign } from "lucide-react"
-
 // Driver navigation items
 const driverNavItems = [
   { title: "Assignments", href: "/driver/assignments", icon: <Package className="h-4 w-4 mr-2" /> },
