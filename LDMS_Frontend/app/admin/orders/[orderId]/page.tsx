@@ -66,7 +66,7 @@ export default function OrderDetailPage() {
         if (!token) throw new Error("JWT token not found");
 
         const response = await fetch(
-          `http://localhost:8023/api/orders/${orderId}`,
+          `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/orders/${orderId}`,
           {
             headers: {
               "Content-Type": "application/json",

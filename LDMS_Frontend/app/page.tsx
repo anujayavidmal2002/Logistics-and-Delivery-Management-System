@@ -49,11 +49,14 @@ export default function LandingPage() {
   
   const handleLogin = async (role: string, email: string, password: string) => {
     try {
-      const res = await fetch(`${apiBaseUrl}/api/auth/login`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password }),
-      });
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/auth/login`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email, password }),
+        }
+      );
       console.log(res);
 
       if (!res.ok) {
@@ -68,7 +71,7 @@ export default function LandingPage() {
 
 
       const userRes = await fetch(
-        `${apiBaseUrl}/api/users/email?email=${email}`,
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/users/email?email=${email}`,
         {
           method: "GET",
           headers: {

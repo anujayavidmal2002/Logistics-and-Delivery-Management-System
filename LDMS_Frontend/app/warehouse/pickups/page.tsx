@@ -60,12 +60,15 @@ export default function PendingScansPage() {
           return;
         }
 
-        const res = await fetch(`${apiBaseUrl}/warehouse/all-orders`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-        });
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_API_BASE_URL}/warehouse/all-orders`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "application/json",
+            },
+          }
+        );
 
         if (!res.ok) throw new Error("Failed to fetch orders");
         const data: Order[] = await res.json();
