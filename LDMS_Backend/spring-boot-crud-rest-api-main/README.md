@@ -96,7 +96,7 @@ The API validates product input with the following rules:
 The project uses the following folder structure:
 ```
 src/main/java/
-    └── com.learnwithiftekhar.spring_boot_rest_api/
+    └── com.msd.spring_boot_rest_api/
         ├── controller/      # REST controllers
         ├── model/          # Data models
         ├── repository/     # Data access layer

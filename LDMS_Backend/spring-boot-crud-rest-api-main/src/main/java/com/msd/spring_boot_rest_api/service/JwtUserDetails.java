@@ -2,6 +2,7 @@ package com.msd.spring_boot_rest_api.service;
 
 import com.msd.spring_boot_rest_api.model.User;
 import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor; // add this import
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -9,14 +10,14 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.Collections;
 
+@NoArgsConstructor // add this
 @AllArgsConstructor
 public class JwtUserDetails implements UserDetails {
 
-    private final User user;
+    private User user; // remove final here
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        // Map role string to SimpleGrantedAuthority
         return Collections.singleton(new SimpleGrantedAuthority("ROLE_" + user.getRole()));
     }
 
